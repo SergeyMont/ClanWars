@@ -22,9 +22,13 @@ public class ClanRepositoryImpl implements ClanRepository {
 
     @Override
     public Clan createClan(Clan clan) {
-        String sql = "INSERT INTO clan (name, gold) VALUES(" + clan.getName() + "," + clan.getGold().get() + ")";
-        ResultSet resultSet = repository.getUpdate(sql);
+        String sql = "INSERT INTO clan (name, gold) VALUES ('" + clan.getName() + "'," + clan.getGold().get() + ")";
+        repository.executeSql(sql);
+        String query = "SELECT * FROM clan " +
+                "WHERE name = '" + clan.getName() + "'";
+        ResultSet resultSet = repository.getUpdate(query);
         try {
+            resultSet.next();
             clan.setId(resultSet.getInt("id"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -40,13 +44,10 @@ public class ClanRepositoryImpl implements ClanRepository {
 
     @Override
     public Clan changeClan(Clan clan) {
-        String sql = "INSERT INTO clan VALUES(" + clan.getId() + "," + clan.getName() + "," + clan.getGold().get() + ")";
-        ResultSet resultSet = repository.getUpdate(sql);
-        try {
-            clan = mapToClan(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String sql = "UPDATE clan SET name='" + clan.getName() + "' , gold = "
+                + clan.getGold().get() + " WHERE id =" + clan.getId();
+        repository.executeSql(sql);
+        clan = getClan(clan.getId());
         return clan;
     }
 

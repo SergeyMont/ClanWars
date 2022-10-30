@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class UserAddGoldServiceTest {
     private UserAddGoldService service;
     private Clan clan;
-    //@Mock
     ClanService clanService = new ClanServiceInMemory();
 
     @BeforeEach
@@ -22,8 +21,6 @@ class UserAddGoldServiceTest {
         clan.setId(1);
         clan.setName("some");
         clan.setGold(new Gold());
-        //MockitoAnnotations.initMocks(this);
-        //Mockito.when(clanService.getClan(Mockito.anyInt())).thenReturn(clan);
         clanService.createClan(clan);
         service = new UserAddGoldService(clanService);
     }

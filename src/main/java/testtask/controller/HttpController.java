@@ -7,8 +7,9 @@ import com.sun.net.httpserver.HttpServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import testtask.model.Clan;
+import testtask.model.Task;
 import testtask.service.ClanService;
-import testtask.service.ClanServiceInMemory;
+import testtask.service.ClanServiceDb;
 import testtask.service.TaskService;
 import testtask.service.UserAddGoldService;
 
@@ -25,13 +26,13 @@ public class HttpController {
 
     public HttpController() throws IOException {
         this.httpServer = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
-        ClanService clanService = new ClanServiceInMemory();
+        ClanService clanService = new ClanServiceDb();
         TaskService taskService = new TaskService(clanService);
         UserAddGoldService userAddGoldService = new UserAddGoldService(clanService);
         ObjectMapper mapper = new ObjectMapper();
         mapper.findAndRegisterModules();
         httpServer.createContext("/clans", clanHttpHandler(clanService, mapper));
-        httpServer.createContext("/clans/task", taskHttpHandler(taskService));
+        httpServer.createContext("/clans/task", taskHttpHandler(taskService, mapper));
         httpServer.createContext("/clans/user", userHttpHandler(userAddGoldService));
     }
 
@@ -99,7 +100,7 @@ public class HttpController {
         return exchange -> {
             try {
                 switch (exchange.getRequestMethod()) {
-                    case "PUT":
+                    case "PATCH":
                         String query = exchange.getRequestURI().getRawQuery();
                         Map<String, String> result = queryToMap(query);
                         int userId = Integer.parseInt(result.get("userId"));
@@ -119,17 +120,58 @@ public class HttpController {
         };
     }
 
-    private HttpHandler taskHttpHandler(TaskService taskService) {
+    private HttpHandler taskHttpHandler(TaskService taskService, ObjectMapper objectMapper) {
         return exchange -> {
             try {
                 switch (exchange.getRequestMethod()) {
-                    case "PUT":
+                    case "PATCH":
                         String query = exchange.getRequestURI().getRawQuery();
                         Map<String, String> result = queryToMap(query);
                         int clanId = Integer.parseInt(result.get("clanId"));
                         int taskId = Integer.parseInt(result.get("taskId"));
                         taskService.completeTask(clanId, taskId);
                         exchange.sendResponseHeaders(204, 0);
+                        break;
+                    case "GET":
+                        String key = exchange.getRequestURI().getRawQuery();
+                        int id = Integer.parseInt(key);
+                        String response = objectMapper.writeValueAsString(taskService.getTask(id));
+                        Headers headers = exchange.getResponseHeaders();
+                        headers.set("Content-Type",
+                                "application/json");
+                        exchange.sendResponseHeaders(200, response.length());
+
+                        try (OutputStream os = exchange.getResponseBody()) {
+                            os.write(response.getBytes());
+                        }
+                        break;
+                    case "POST":
+                        if (exchange.getRequestBody() != null) {
+                            taskService.createTask(objectMapper.readValue(exchange.getRequestBody(),
+                                    Task.class));
+                            exchange.sendResponseHeaders(201, 0);
+                        } else {
+                            exchange.sendResponseHeaders(400, 0);
+                        }
+                        break;
+                    case "PUT":
+                        if (exchange.getRequestBody() != null) {
+                            taskService.updateTask(objectMapper.readValue(exchange.getRequestBody(),
+                                    Task.class));
+                            exchange.sendResponseHeaders(204, 0);
+                        } else {
+                            exchange.sendResponseHeaders(400, 0);
+                        }
+                        break;
+                    case "DELETE":
+                        String k = exchange.getRequestURI().getRawQuery();
+                        if (!k.isEmpty()) {
+                            int taskIdDel = Integer.parseInt(k);
+                            taskService.deleteTask(taskIdDel);
+                            exchange.sendResponseHeaders(204, -1);
+                        } else {
+                            exchange.sendResponseHeaders(400, 0);
+                        }
                         break;
                     default:
                         System.out.println("/clans/user ждёт HTTP-запрос, а получил " + exchange.getRequestMethod());

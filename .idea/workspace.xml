@@ -4,29 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fd80fc2-007a-4e8b-a453-c1673cebefc7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/controller/HttpController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/model/Clan.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/model/Gold.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/model/Task.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/ClanRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/ClanRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/TotalRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/TotalRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/service/ClanService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/service/ClanServiceInMemory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/service/TaskService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/service/UserAddGoldService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/testtask/repository/ClanRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/testtask/service/UserAddGoldServiceTest.java" afterDir="false" />
+    <list default="true" id="0fd80fc2-007a-4e8b-a453-c1673cebefc7" name="Changes" comment="initial commit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/TaskRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/TaskRepositoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/testtask/service/ClanServiceDb.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testtask/controller/HttpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testtask/controller/HttpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testtask/model/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testtask/model/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testtask/repository/ClanRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/ClanRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testtask/repository/TotalRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testtask/repository/TotalRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/testtask/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/testtask/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/testtask/repository/ClanRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testtask/repository/ClanRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/testtask/service/UserAddGoldServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testtask/service/UserAddGoldServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -103,6 +93,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ClanRepositoryTest.changeClan" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ClanWars" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="testtask.repository.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="testtask.repository" />
+      <option name="MAIN_CLASS_NAME" value="testtask.repository.ClanRepositoryTest" />
+      <option name="METHOD_NAME" value="changeClan" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ClanRepositoryTest.createClan" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ClanWars" />
       <extension name="coverage">
@@ -135,33 +141,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserAddGoldServiceTest.addGoldToClan" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClanRepositoryTest.getClan" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ClanWars" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="testtask.service.*" />
+          <option name="PATTERN" value="testtask.repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="testtask.service" />
-      <option name="MAIN_CLASS_NAME" value="testtask.service.UserAddGoldServiceTest" />
-      <option name="METHOD_NAME" value="addGoldToClan" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserAddGoldServiceTest.stressThreadAddGold" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ClanWars" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="testtask.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="testtask.service" />
-      <option name="MAIN_CLASS_NAME" value="testtask.service.UserAddGoldServiceTest" />
-      <option name="METHOD_NAME" value="stressThreadAddGold" />
+      <option name="PACKAGE_NAME" value="testtask.repository" />
+      <option name="MAIN_CLASS_NAME" value="testtask.repository.ClanRepositoryTest" />
+      <option name="METHOD_NAME" value="getClan" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -170,10 +160,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Application" />
-        <item itemvalue="JUnit.ClanRepositoryTest.deleteClan" />
+        <item itemvalue="JUnit.ClanRepositoryTest.getClan" />
+        <item itemvalue="JUnit.ClanRepositoryTest.changeClan" />
         <item itemvalue="JUnit.ClanRepositoryTest.createClan" />
-        <item itemvalue="JUnit.UserAddGoldServiceTest.stressThreadAddGold" />
-        <item itemvalue="JUnit.UserAddGoldServiceTest.addGoldToClan" />
+        <item itemvalue="JUnit.ClanRepositoryTest.deleteClan" />
       </list>
     </recent_temporary>
   </component>
@@ -188,8 +178,17 @@
       <workItem from="1666638187385" duration="5168000" />
       <workItem from="1666896259161" duration="9045000" />
       <workItem from="1667043508572" duration="19191000" />
-      <workItem from="1667122594814" duration="416000" />
+      <workItem from="1667122594814" duration="5732000" />
+      <workItem from="1667137441027" duration="4326000" />
     </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <created>1667123060155</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1667123060155</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +204,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

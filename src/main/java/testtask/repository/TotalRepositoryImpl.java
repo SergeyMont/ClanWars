@@ -1,7 +1,11 @@
 package testtask.repository;
 
-import java.sql.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.inject.Singleton;
+import java.sql.*;
+@Singleton
 public class TotalRepositoryImpl implements TotalRepository {
 
     static final String JDBC_DRIVER = "org.h2.Driver";
@@ -10,63 +14,43 @@ public class TotalRepositoryImpl implements TotalRepository {
     static final String USER = "sa";
     static final String PASS = "";
 
+    final Logger log = LoggerFactory.getLogger(TotalRepositoryImpl.class);
+    Connection conn = null;
+    Statement stmt = null;
 
-    public void executeSql(String sql) {
-        Connection conn = null;
-        Statement stmt = null;
+    public TotalRepositoryImpl(){
         try {
             Class.forName(JDBC_DRIVER);
 
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
+            log.info("Connected to DB on URL"+DB_URL);
             stmt = conn.createStatement();
-            stmt.executeUpdate(sql);
-
-            stmt.close();
-            conn.close();
-        } catch (SQLException se) {
+        }catch (SQLException se) {
+            log.error("Connection to DB is fail");
             se.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+            log.error("Connection to DB is fail");
+            e.printStackTrace();}
+    }
+
+
+    public void executeSql(String sql) {
+
+        if(stmt!=null){
             try {
-                if (stmt != null) stmt.close();
-            } catch (SQLException se2) {
-            }
-            try {
-                if (conn != null) conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
+                stmt.executeUpdate(sql);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
-        System.out.println("Goodbye!");
     }
 
     public ResultSet getUpdate(String sql) {
-        Connection conn = null;
-        Statement stmt = null;
         try {
-            Class.forName(JDBC_DRIVER);
-
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
             return stmt.executeQuery(sql);
-        } catch (SQLException se) {
-            se.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stmt != null) stmt.close();
-            } catch (SQLException se2) {
-            }
-            try {
-                if (conn != null) conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 }
 

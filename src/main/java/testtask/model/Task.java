@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class Task {
-    private long id;
+    private int id;
+    private String name;
     private int reward;
     private boolean complete;
 }

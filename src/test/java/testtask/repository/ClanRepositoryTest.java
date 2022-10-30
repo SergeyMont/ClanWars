@@ -7,7 +7,6 @@ import testtask.model.Clan;
 import testtask.model.Gold;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ClanRepositoryTest {
     private final ClanRepository repository = new ClanRepositoryImpl();
@@ -43,12 +42,12 @@ class ClanRepositoryTest {
         repository.createClan(clan);
         clan.setName("another");
         Clan result = repository.changeClan(clan);
-        assertEquals(result, repository.getClan(clan.getId()));
+        assertEquals(result.getName(), repository.getClan(clan.getId()).getName());
     }
 
     @Test
     void getClan() {
         Clan result = repository.createClan(clan);
-        assertEquals(result, repository.getClan(result.getId()));
+        assertEquals(result.getName(), repository.getClan(result.getId()).getName());
     }
 }
